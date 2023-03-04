@@ -1,4 +1,7 @@
 from bs4 import BeautifulSoup
+from gtts import gTTS
+from gtts import langs
+import os
 import requests
 
 # Obtener el documento HTML
@@ -6,26 +9,40 @@ website = 'https://www.elle.com/es/gourmet/gastronomia/a42709633/como-ser-vegano
 result = requests.get(website)
 content = result.text
 soup = BeautifulSoup(content, 'lxml')
-print(soup.prettify())
+# print(soup.prettify())
 
-# Localizar la caja (box) que contiene el titulo (title) y transcript
-title_box = soup.find('h1', class_='content-hed standard-hed')
-# title_box = title_box.find('span', class_='wait-font-load')
-# print(title_box.get_text())
-# Localizar el titulo (title) y transcript
-title = title_box.find('span').get_text()
-print(title_box)
 
+# Let's identify the box that contains the title and intro
 box = soup.find('div', class_='content-header-inner')
 title = box.find('h1').get_text()
 intro = box.find('p').get_text(strip=True, separator=' ')
 
+print(title)
+
+
+# Let's identify the box that contains the autor
 author_box = soup.find('div', class_='byline')
 author = author_box.find('span').get_text(strip=True, separator=' ')
 
+print(author)
+
+
+# Let's get the actual article box
 article_box = soup.find_all('p', class_='body-text')
 
 print(article_box)
+
+full_article = ''
+
+full_article += title + '\n'
+full_article +=  intro + '\n'
+
+print (intro[64])
+
+help(gTTS)
+
+# article_box[0].text
+
 
 # intro = box.find('div', class_='full-script').get_text(strip=True, separator=' ')
 
