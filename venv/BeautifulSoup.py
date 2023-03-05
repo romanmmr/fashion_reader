@@ -18,6 +18,7 @@ title = box.find('h1').get_text()
 intro = box.find('p').get_text(strip=True, separator=' ')
 
 print(title)
+print(intro)
 
 
 # Let's identify the box that contains the autor
@@ -32,14 +33,19 @@ article_box = soup.find_all('p', class_='body-text')
 
 print(article_box)
 
+intro = intro.replace(chr(8216), "")
+intro = intro.replace(chr(8217), "")
+intro = intro.replace("  ", " ")
+
 full_article = ''
 
 full_article += title + '\n'
 full_article +=  intro + '\n'
 
-print (intro[64])
+print (full_article)
 
-help(gTTS)
+tts = gTTS(full_article, lang="es", tld="es")
+tts.save('full_article.mp3')
 
 # article_box[0].text
 
